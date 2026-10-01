@@ -8,6 +8,7 @@ Prerequisite: Node.js 22.
 
 ```sh
 npm ci
+npx playwright install chromium
 npm run dev
 ```
 
@@ -17,6 +18,8 @@ Build and test the deployable artifact:
 npm run build
 npm run test
 ```
+
+On minimal Linux CI images that do not already include browser system libraries, use `npx playwright install --with-deps chromium` instead.
 
 Preview the production artifact exactly as a static host will serve it:
 
