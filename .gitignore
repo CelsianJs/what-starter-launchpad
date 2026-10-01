@@ -1,0 +1,11 @@
+node_modules
+dist
+.screenshots
+.vura
+.DS_Store
+.env*
+!.env.example
+.vura/
+.omx/
+playwright-report/
+test-results/
