@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { routes } from '../src/content/site.mjs';
+import { validateVuraStaticManifest } from './vura-static-check.mjs';
 
 const problems = [];
 const fail = (msg) => problems.push(msg);
@@ -18,18 +18,20 @@ for (const route of routes) {
   if (!html.includes('<script type="module" src="/assets/')) fail(`${route.path} missing client asset`);
 }
 
-for (const required of ['dist/static/404.html', 'dist/static/site.css', 'dist/static/sitemap.xml', 'dist/static/robots.txt', 'dist/static/llms.txt', 'dist/manifest.json']) {
+for (const required of ['dist/static/404.html', 'dist/static/site.css', 'dist/static/sitemap.xml', 'dist/static/robots.txt', 'dist/static/llms.txt']) {
   if (!existsSync(required)) fail(`missing ${required}`);
 }
 
-const manifest = JSON.parse(readFileSync('dist/manifest.json', 'utf8'));
-if (manifest.pages?.length !== routes.length) fail('manifest route count mismatch');
-if (manifest.api?.length !== 0) fail('static starter should not register API routes');
-if (manifest.notFoundPage !== '404.html') fail('manifest missing notFoundPage metadata');
+let manifestPages = 0;
+try {
+  manifestPages = validateVuraStaticManifest(routes.length);
+} catch (error) {
+  fail(error instanceof Error ? error.message : String(error));
+}
 
 if (problems.length) {
   console.error(problems.map((p) => `- ${p}`).join('\n'));
   process.exit(1);
 }
 
-console.log(`check OK: ${routes.length} routes, ${manifest.pages.length} manifest pages.`);
+console.log(`check OK: ${routes.length} routes, ${manifestPages} canonical Vura manifest pages validated.`);

@@ -12,8 +12,8 @@ The important boundary: `mount()` adds client interactivity over static fallback
 | Static rendering | `src/server/render.mjs` | Uses `h()` plus `renderToString()` so Node never imports browser-lowered JSX. |
 | Client islands | `src/client/main.jsx` | Mounts the pricing calculator and product tour only when their host elements exist. |
 | Styles | `src/shared/site.css` | Local CSS variables and components; no remote images or font files. |
-| Static artifact | `scripts/build.mjs` | Reads Vite manifest, writes route HTML, sitemap, robots and Vura manifest. |
-| Artifact checks | `scripts/check.mjs` | Fails the build for missing routes, nullish text, multiple h1 elements or bad manifest shape. |
+| Static artifact | `scripts/build.mjs` | Reads Vite manifest, writes route HTML, sitemap and robots output under `dist/static`. |
+| Artifact checks | `scripts/check.mjs` | Fails the build for missing routes, nullish text, multiple h1 elements or invalid canonical Vura manifest shape. |
 
 ## Data flow
 
@@ -120,6 +120,14 @@ function pageFor(kind) {
 
 Keep `src/client/main.jsx` as the browser boundary.
 
+### Let Vura synthesize the static manifest
+
+Problem: an earlier build wrote a partial `dist/manifest.json` with `pages[].urlPattern` and `mode`, but without the platform-required `timestamp` and `pages[].filePath`. Vura treats a present manifest as authoritative, so upload validation rejected it.
+
+Fix: this starter now writes the full static manifest contract: `api`, `pages[].filePath`, `pages[].urlPattern`, `mode`, `hasGetServerData`, `hasLoader`, `config.staticKey`, `layouts` and `timestamp`. `scripts/check.mjs` validates that emitted manifest with `@celsian/vura-contract`, the public contract package used by Vura.
+
+Takeaway: for CLI uploads that keep files under `dist/static`, emit the complete manifest contract and point `config.staticKey` at the public static keys.
+
 ## What went smoothly
 
 - Route metadata, page titles and sitemap entries all come from `src/content/site.mjs`.
@@ -142,7 +150,7 @@ npm run build
 npm run smoke
 ```
 
-The checks should cover route output, one h1 per page, no undefined/null text, manifest shape, pricing interaction, tour interaction and a genuine static 404.
+The checks should cover route output, one h1 per page, no undefined/null text, canonical Vura static-manifest validation, pricing interaction, tour interaction and a genuine static 404.
 
 ## Reset
 

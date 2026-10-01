@@ -1,6 +1,7 @@
 import { copyFileSync, cpSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { renderRoute, routes } from '../src/server/render.mjs';
+import { writeCanonicalVuraManifest } from './vura-static-check.mjs';
 
 const manifest = JSON.parse(readFileSync('dist/client/.vite/manifest.json', 'utf8'));
 const assetPath = `/${manifest['src/client/main.jsx'].file}`;
@@ -20,12 +21,7 @@ copyFileSync('dist/static/404/index.html', 'dist/static/404.html');
 writeFileSync('dist/static/sitemap.xml', sitemap());
 writeFileSync('dist/static/robots.txt', `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`);
 writeFileSync('dist/static/llms.txt', '# Launchpad What starter\n\nSee /build for implementation notes.\n');
-writeFileSync('dist/manifest.json', JSON.stringify({
-  version: 1,
-  notFoundPage: '404.html',
-  pages: routes.map((route) => ({ urlPattern: route.path, mode: 'static' })),
-  api: [],
-}, null, 2));
+writeCanonicalVuraManifest(routes.map((route) => route.path));
 
 function sitemap() {
   const urls = routes.filter((route) => route.path !== '/404').map((route) => {

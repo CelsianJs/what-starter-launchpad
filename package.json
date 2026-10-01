@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
+    "@celsian/vura-contract": "0.8.2",
     "playwright": "1.63.0",
     "vite": "^6.0.0",
     "what-compiler": "0.13.10",
