@@ -90,7 +90,7 @@ function Tour() {
 }
 
 function Pricing() {
-  return h('section', { class: 'section shell' },
+  return h('section', { class: 'section shell page-hero' },
     h('p', { class: 'eyeline' }, 'Pricing calculator'),
     h('h1', {}, 'Model a team before making a pricing page yours.'),
     h('div', { id: 'pricing-calculator', class: 'pricing-layout' },
@@ -152,6 +152,7 @@ function Build() {
         h('li', {}, 'Lesson: `safeStorageGet` and `safeStorageSet` catch denied storage access and fall back to tab-local memory without clearing user storage.'),
         h('li', {}, 'Refinement: the home hero uses a server-rendered sample build timeline instead of a generic terminal card, so the product object teaches release observability even without JavaScript.'),
         h('li', {}, 'Refinement: product screens avoid internal route/process claims; implementation details live here in the build reference.'),
+        h('li', {}, 'Regression covered: the pricing route shares the `.page-hero` headline scale, and smoke tests require at least 24px between the headline box and calculator panel at 1440px and 390px.'),
       ),
     ),
   );

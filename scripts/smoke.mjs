@@ -59,6 +59,33 @@ try {
     await page.close();
   });
 
+  await check('pricing headline clears calculator at desktop and mobile widths', async () => {
+    const page = await browser.newPage();
+    for (const viewport of [
+      { width: 1440, height: 1000, name: 'desktop' },
+      { width: 390, height: 844, name: 'mobile' },
+    ]) {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto(`${base}/pricing`, { waitUntil: 'networkidle' });
+      const geometry = await page.evaluate(() => {
+        const heading = document.querySelector('.page-hero h1');
+        const panel = document.querySelector('.pricing-layout .panel');
+        const headingBox = heading?.getBoundingClientRect();
+        const panelBox = panel?.getBoundingClientRect();
+        return {
+          className: heading?.closest('section')?.className || '',
+          gap: headingBox && panelBox ? panelBox.top - headingBox.bottom : null,
+          scrollWidth: document.documentElement.scrollWidth,
+          innerWidth: window.innerWidth,
+        };
+      });
+      if (!geometry.className.includes('page-hero')) throw new Error(`${viewport.name} pricing section missing page-hero: ${JSON.stringify(geometry)}`);
+      if (geometry.gap === null || geometry.gap < 24) throw new Error(`${viewport.name} pricing gap below 24px: ${JSON.stringify(geometry)}`);
+      if (geometry.scrollWidth > geometry.innerWidth + 1) throw new Error(`${viewport.name} horizontal overflow: ${JSON.stringify(geometry)}`);
+    }
+    await page.close();
+  });
+
   await check('pricing calculator recovers from malformed persisted values', async () => {
     const page = await browser.newPage();
     await page.addInitScript(() => {

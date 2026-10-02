@@ -108,6 +108,22 @@ Proof: `scripts/check.mjs` rejects nullish rendered text, and smoke coverage exe
 
 Takeaway: static islands still need input hygiene because their first browser render is user-controlled.
 
+### Match route classes to scoped visual fixes
+
+Problem: the pricing route originally rendered with `class="section shell"` while the smaller hero headline rule targeted `.page-hero h1`. That meant the CSS fix applied to `/tour` but not `/pricing`, so the pricing headline could crowd the calculator panel.
+
+After:
+
+```js
+function Pricing() {
+  return h('section', { class: 'section shell page-hero' }, ...);
+}
+```
+
+Proof: `scripts/smoke.mjs` now opens `/pricing` at 1440px and 390px, confirms the section has `page-hero`, and requires at least 24px between the headline bounding box and the first calculator panel.
+
+Takeaway: when a visual refinement depends on a scoped class, add a geometry regression against the actual route, not just the intended selector.
+
 ### Do not import client JSX into the server build
 
 The What compiler lowers JSX for browser execution. Server-rendered pages use `h()` instead:

@@ -102,7 +102,7 @@ a { color: inherit; }
 }
 h1, h2, h3 { margin: 0; letter-spacing: -.045em; line-height: .94; }
 h1 { font-size: clamp(3.8rem, 8vw, 6.8rem); max-width: 920px; }
-.page-hero h1 { font-size: clamp(3rem, 6vw, 5.5rem); margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.page-hero h1 { font-size: clamp(3rem, 6vw, 5.5rem); line-height: .98; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
 h2 { font-size: clamp(2.4rem, 6vw, 5.5rem); }
 h3 { font-size: clamp(1.35rem, 2vw, 2rem); }
 p { color: var(--muted); line-height: 1.65; font-size: 1.04rem; }
@@ -232,6 +232,7 @@ input[type="range"] { width: 100%; accent-color: var(--cobalt-2); }
   .nav a { white-space: nowrap; }
   .grid { grid-template-columns: 1fr; }
   h1 { font-size: clamp(3.2rem, 18vw, 5rem); }
+  .page-hero h1 { font-size: clamp(2.65rem, 12vw, 4.1rem); line-height: 1; margin-bottom: 2rem; }
   .build-timeline li { grid-template-columns: 2.4rem 1fr; }
   .build-timeline .result { grid-column: 2; }
 }
