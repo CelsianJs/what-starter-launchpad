@@ -42,7 +42,8 @@
 ## Components
 - Existing components to reuse: What Framework client `mount`, `useSignal`, `useComputed`, `useEffect`; server `h` + `renderToString`.
 - New/changed components: marketing shell, pricing calculator island, tour stage island, docs cards, changelog timeline.
-- Variants and states: active tour step, pricing slider states, keyboard focus, mobile nav wrapping.
+- Variants and states: active tour step, pricing slider states, keyboard focus, mobile nav wrapping, guarded sample release rows.
+- Refinement state: the home hero now leads with a meaningful sample build timeline so build observability is visible as a product object, not a decorative terminal.
 - Token/component ownership: CSS variables in `src/shared/site.css`; route/content data in `src/content/site.mjs`.
 
 ## Accessibility
@@ -79,3 +80,8 @@
 
 ## Open questions
 - [ ] Publishing owner will confirm final Vura project IDs before deployment.
+
+## Refinement notes — 2026-10-02 Opus review
+- Reduced the global h1 ceiling and added route-scoped pricing hero spacing so the calculator no longer competes with oversized display type.
+- Replaced process-facing metric copy with honest fictional product states and moved implementation/routing explanations into `/build`.
+- Mobile nav is left-aligned with horizontal overflow rather than a ragged right-wrapped cluster.

@@ -133,6 +133,8 @@ Takeaway: for CLI uploads that keep files under `dist/static`, emit the complete
 - Route metadata, page titles and sitemap entries all come from `src/content/site.mjs`.
 - The pricing island was small enough to document as a complete signal/computed/effect loop.
 - Artifact checks made static route regressions cheaper than visual inspection.
+- The Opus refinement pass turned the hero object into a server-rendered release timeline with CSS duration bars, which made build observability visible while preserving static/no-JS rendering.
+- Moving process/routing language out of the product stats kept buyer-facing pages cleaner while `/build` still records the framework patterns for agents.
 
 ## Limits to preserve
 

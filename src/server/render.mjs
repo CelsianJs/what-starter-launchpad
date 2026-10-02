@@ -1,6 +1,6 @@
 import { h } from 'what-framework';
 import { renderToString } from 'what-framework/server';
-import { changelog, docsCards, nav, routes, site, tourSteps } from '../content/site.mjs';
+import { changelog, docsCards, nav, releaseTimeline, routes, site, tourSteps } from '../content/site.mjs';
 
 const css = '/site.css';
 
@@ -43,23 +43,32 @@ function Home() {
           A({ class: 'button', href: '/build' }, 'Read build notes'),
         ),
       ),
-      h('aside', { class: 'terminal', 'aria-label': 'Build signal example' },
-        h('div', { class: 'terminal-bar' }, h('span', { class: 'dot' }), h('span', { class: 'dot' }), h('span', { class: 'dot' })),
-        h('pre', {}, `release/421\nstatus: guarded\nslowest step: browser smoke\nowner: frontend-platform\nnext action: ship docs diff`),
+      h('aside', { class: 'release-card', 'aria-label': 'Sample build timeline' },
+        h('div', { class: 'release-head' },
+          h('span', { class: 'status-chip' }, 'guarded'),
+          h('span', { class: 'meta' }, 'release/421'),
+        ),
+        h('h2', {}, 'Browser smoke is the slowest gate.'),
+        h('p', {}, 'Owner: frontend-platform · next action: ship docs diff'),
+        h('ol', { class: 'build-timeline' }, releaseTimeline.map((item) => h('li', { style: `--bar:${item.percent}%` },
+          h('span', { class: 'step-index' }, item.step),
+          h('span', {}, h('strong', {}, item.label), h('small', {}, item.owner)),
+          h('span', { class: `result ${item.status}` }, item.duration),
+        ))),
       ),
     ),
     h('section', { class: 'section shell' },
       h('div', { class: 'grid' },
         h('article', { class: 'panel' }, h('div', { class: 'metric' }, '0'), h('h3', {}, 'Dark launches guessed'), h('p', {}, 'Give every release owner the same visible source of truth before production changes hands.')),
-        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '7'), h('h3', {}, 'Decision surfaces'), h('p', {}, 'Home, tour, pricing, docs and release notes all resolve to durable product pages.')),
-        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '1'), h('h3', {}, 'Operating model'), h('p', {}, 'The calculator keeps assumptions local so visitors can test scenarios without surrendering data.')),
+        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '14m'), h('h3', {}, 'Sample time-to-green'), h('p', {}, 'Use the sample timeline to show install, build and browser-smoke stages without promising a real benchmark.')),
+        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '3'), h('h3', {}, 'Guarded release states'), h('p', {}, 'Passed, guarded and action-needed states make the release call easy to scan.')),
       ),
     ),
   );
 }
 
 function Tour() {
-  return h('section', { class: 'section shell' },
+  return h('section', { class: 'section shell page-hero' },
     h('p', { class: 'eyeline' }, 'Product tour'),
     h('h1', {}, 'From noisy CI to one release call.'),
     h('p', {}, 'Follow a release from its first build signal to a clear production decision. Choose a stage to explore the workflow.'),
@@ -141,6 +150,8 @@ function Build() {
         h('li', {}, 'Lesson: server pages use `h()` and `renderToString`; browser JSX stays in `src/client/main.jsx` so compiler-lowered DOM code is never imported by the Node renderer.'),
         h('li', {}, 'Lesson: `mount()` replaces island fallback containers when JavaScript loads. This is client-mounted interactivity, not SSR-preserving hydration.'),
         h('li', {}, 'Lesson: `safeStorageGet` and `safeStorageSet` catch denied storage access and fall back to tab-local memory without clearing user storage.'),
+        h('li', {}, 'Refinement: the home hero uses a server-rendered sample build timeline instead of a generic terminal card, so the product object teaches release observability even without JavaScript.'),
+        h('li', {}, 'Refinement: product screens avoid internal route/process claims; implementation details live here in the build reference.'),
       ),
     ),
   );

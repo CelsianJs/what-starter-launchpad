@@ -24,6 +24,33 @@ export const routes = [
   { path: '/404', title: 'Page not found', description: 'Preview of the static 404 page used for unknown paths.', kind: 'notFound' },
 ];
 
+export const releaseTimeline = [
+  {
+    step: '01',
+    label: 'Install',
+    owner: 'platform',
+    duration: '1m 12s',
+    status: 'passed',
+    percent: 22,
+  },
+  {
+    step: '02',
+    label: 'Build',
+    owner: 'frontend',
+    duration: '3m 48s',
+    status: 'passed',
+    percent: 62,
+  },
+  {
+    step: '03',
+    label: 'Browser smoke',
+    owner: 'frontend',
+    duration: '6m 04s',
+    status: 'guarded',
+    percent: 100,
+  },
+];
+
 export const tourSteps = [
   {
     key: 'collect',
