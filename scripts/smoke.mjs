@@ -133,7 +133,7 @@ try {
     await page.goto(`${base}/tour`, { waitUntil: 'networkidle' });
     await page.locator('.tour-button').nth(2).click();
     const metric = await page.locator('.metric').last().textContent();
-    if (!metric.includes('9 min')) throw new Error(`unexpected tour metric: ${metric}`);
+    if (!metric.includes('1 owner')) throw new Error(`unexpected tour metric: ${metric}`);
     await page.screenshot({ path: '.screenshots/launchpad-mobile.png', fullPage: true });
     await page.close();
   });

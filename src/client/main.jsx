@@ -38,6 +38,7 @@ function PricingCalculator() {
           </tbody>
         </table>
         <p>{() => `${seats()} teammates, ${minutes()}k build minutes and ${retention()} days of history. Local estimate only.`}</p>
+        <p class="rate-note">Sample rates: $20 per seat, $6 per 1,000 build minutes, and $2.50 per retention day beyond 14. No payment or account is created.</p>
         <p class="storage-note" hidden={() => storageStatus() === 'persistent'}>Storage is unavailable in this browser context, so this estimate will reset after the tab closes.</p>
       </aside>
     </>
@@ -79,6 +80,7 @@ function TourIsland({ steps }) {
         <h2>{() => current().title}</h2>
         <p>{() => current().body}</p>
         <div class="metric">{() => current().metric}</div>
+        <ul class="build-list">{() => current().evidence.map(item => <li>{item}</li>)}</ul>
       </aside>
     </>
   );
