@@ -1,8 +1,12 @@
 # Design
 
+## Product-depth refinement — 2026-10-07
+
+The tour now carries distinct intake, risk and ownership evidence for the same fictional release. Pricing lists its sample rates beside the total; operator docs and dated demo product releases stay separate from implementation notes. Cobalt/carbon grid tokens and existing calculator behavior remain unchanged.
+
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-01
+- Last refreshed: 2026-10-07
 - Primary product surfaces: Home, product tour, pricing calculator, docs, changelog, build reference, 404.
 - Evidence reviewed: existing What Framework starter conventions, server-rendering documentation and Vura static artifact conventions.
 

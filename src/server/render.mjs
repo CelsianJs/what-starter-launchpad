@@ -40,7 +40,7 @@ function Home() {
         h('p', {}, 'Launchpad gives engineering teams a crisp operating view across build health, release risk and ownership before the train leaves the station.'),
         h('div', { class: 'actions' },
           A({ class: 'button primary', href: '/pricing' }, 'Try the calculator'),
-          A({ class: 'button', href: '/build' }, 'Read build notes'),
+          A({ class: 'button', href: '/tour' }, 'Explore the workflow'),
         ),
       ),
       h('aside', { class: 'release-card', 'aria-label': 'Sample build timeline' },
@@ -59,8 +59,8 @@ function Home() {
     ),
     h('section', { class: 'section shell' },
       h('div', { class: 'grid' },
-        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '0'), h('h3', {}, 'Dark launches guessed'), h('p', {}, 'Give every release owner the same visible source of truth before production changes hands.')),
-        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '14m'), h('h3', {}, 'Sample time-to-green'), h('p', {}, 'Use the sample timeline to show install, build and browser-smoke stages without promising a real benchmark.')),
+        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '1'), h('h3', {}, 'Named release owner'), h('p', {}, 'Each sample warning has an owner and a next action, so the handoff does not disappear between stages.')),
+        h('article', { class: 'panel' }, h('div', { class: 'metric' }, '11m'), h('h3', {}, 'Sample pipeline duration'), h('p', {}, 'Install, build and browser smoke total 11 minutes 4 seconds in this fictional record. This is not a performance benchmark.')),
         h('article', { class: 'panel' }, h('div', { class: 'metric' }, '3'), h('h3', {}, 'Guarded release states'), h('p', {}, 'Passed, guarded and action-needed states make the release call easy to scan.')),
       ),
     ),
@@ -84,6 +84,7 @@ function Tour() {
         h('h2', {}, tourSteps[0].title),
         h('p', {}, tourSteps[0].body),
         h('div', { class: 'metric' }, tourSteps[0].metric),
+        h('ul', { class: 'build-list' }, ...tourSteps[0].evidence.map(item => h('li', {}, item))),
       ),
     ),
   );
@@ -92,7 +93,8 @@ function Tour() {
 function Pricing() {
   return h('section', { class: 'section shell page-hero' },
     h('p', { class: 'eyeline' }, 'Pricing calculator'),
-    h('h1', {}, 'Model a team before making a pricing page yours.'),
+    h('h1', {}, 'A clear budget for the next release.'),
+    h('p', {}, 'Explore fictional rates for a team, pipeline usage and history. This local estimate is not a quote, subscription or checkout.'),
     h('div', { id: 'pricing-calculator', class: 'pricing-layout' },
       h('div', { class: 'panel stack' },
         h('label', { for: 'seats' }, 'Seats: 12'),
@@ -112,7 +114,7 @@ function Pricing() {
             h('tr', {}, h('td', {}, 'Retention'), h('td', {}, '$40')),
           ),
         ),
-        h('p', {}, 'Local estimate only. Replace with real billing logic before accepting money.'),
+        h('p', {}, 'Sample rates: $20 per seat, $6 per 1,000 build minutes, and $2.50 per retention day beyond 14. No payment or account is created.'),
       ),
     ),
   );
@@ -123,14 +125,16 @@ function Docs() {
     h('p', { class: 'eyeline' }, 'Docs'),
     h('h1', {}, 'Docs for the operator who owns the release.'),
     h('div', { class: 'grid' }, docsCards.map(([title, body]) => h('article', { class: 'panel' }, h('h3', {}, title), h('p', {}, body)))),
+    h('section', { class: 'panel operator-example' }, h('h2', {}, 'Read a guarded release'), h('ol', {}, h('li', {}, 'Collect the record: release/421 has a passed build and a 6m 04s browser-smoke stage.'), h('li', {}, 'Explain the guard: the smoke stage exceeds the sample 5-minute budget. Duration alone does not establish a defect.'), h('li', {}, 'Route the check: frontend-platform reviews the changed route and repeats smoke before promotion.')), h('p', {}, 'Sample workflow only. Launchpad does not ingest a real pipeline or promote deployments in this demo.'), A({ href: '/tour' }, 'Follow the sample release')),
   );
 }
 
 function Changelog() {
   return h('section', { class: 'section shell' },
     h('p', { class: 'eyeline' }, 'Changelog'),
-    h('h1', {}, 'Ship notes without a CMS.'),
-    h('ul', { class: 'timeline' }, changelog.map(([version, body]) => h('li', {}, h('strong', {}, `v${version}`), h('p', {}, body)))),
+    h('h1', {}, 'Release notes, with a next step.'),
+    h('p', {}, 'Fictional product updates for the Launchpad demo.'),
+    h('ul', { class: 'timeline' }, changelog.map(entry => h('li', {}, h('strong', {}, `v${entry.version} · ${entry.date}`), h('h2', {}, entry.title), h('p', {}, entry.body)))),
   );
 }
 
@@ -141,7 +145,7 @@ function Build() {
     h('div', { class: 'panel' },
       h('p', {}, 'Server routes are rendered with `what-framework/server`; interactive pricing and tour widgets mount with What signals in the browser.'),
       h('ul', { class: 'build-list' },
-        h('li', {}, 'Signals: `src/client/main.jsx` uses `useSignal` for seats, minutes, retention and tour step.'),
+        h('li', {}, h('code', {}, 'current().evidence.map(item => ...)'), ' runs inside a reactive accessor so selected-stage evidence updates without remounting.'), h('li', {}, 'Distinct intake, risk and owner records retain a useful static first-stage fallback. Unsupported time-saved copy was replaced with a named owner, and rate assumptions now sit beside totals.'), h('li', {}, 'Signals: `src/client/main.jsx` uses `useSignal` for seats, minutes, retention and tour step.'),
         h('li', {}, 'Computed: pricing totals use `useComputed` so derived rows update together.'),
         h('li', {}, 'Effects: pricing assumptions persist to localStorage and remain local-only.'),
         h('li', {}, 'Routing: route metadata lives in `src/content/site.mjs`; `scripts/build.mjs` emits `path/index.html`.'),

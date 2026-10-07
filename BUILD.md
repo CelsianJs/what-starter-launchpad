@@ -1,5 +1,11 @@
 # How Launchpad was built
 
+## Product-depth patterns — 2026-10-07
+
+Tour evidence lives in each `tourSteps` record and is rendered in both the server fallback and mounted aside. The old unsupported time-saved metric is replaced by a named-owner count. `current().evidence.map(...)` stays inside a reactive accessor so selecting a stage updates the evidence without remounting the component. Static markup retains the first stage with JavaScript disabled. `scripts/product-depth.test.mjs` checks distinct records; `scripts/product-browser.mjs` checks 1440/390 geometry and no-JS routes. Existing pricing persistence, denied-storage, tour and 404 regressions still run.
+
+Verification: `npm test` runs content/model regressions, production artifact checks, contextual browser flows, desktop/mobile screenshots and the original smoke suite. Screenshot proof is under `.screenshots/`; no external services are required.
+
 Launchpad is a static-first startup marketing reference. The build renders every public route to HTML, then mounts two small What islands for pricing and product-tour interaction.
 
 The important boundary: `mount()` adds client interactivity over static fallback HTML. It is not SSR-preserving hydration.

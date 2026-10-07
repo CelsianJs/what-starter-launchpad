@@ -57,18 +57,21 @@ export const tourSteps = [
     title: 'Collect build signals',
     body: 'Ingest status, duration and artifact metadata from the tools your team already runs.',
     metric: '4 inputs',
+    evidence: ['release/421 · preview channel', 'Build: passed · 3m 48s · frontend', 'Browser smoke: guarded · 6m 04s · frontend-platform'],
   },
   {
     key: 'explain',
     title: 'Explain release risk',
     body: 'Group warnings by owner and surface what changed since the last healthy deployment.',
     metric: '18 rules',
+    evidence: ['Risk: browser smoke exceeds the sample 5m budget', 'Previous healthy release: 4m 20s', 'Decision: review the changed route before promotion'],
   },
   {
     key: 'route',
     title: 'Route the fix',
     body: 'Hand the right context to the right teammate before the release train stalls.',
-    metric: '9 min saved',
+    metric: '1 owner',
+    evidence: ['Owner: frontend-platform', 'Next action: inspect the route diff and repeat browser smoke', 'Release stays guarded until the owner records the result'],
   },
 ];
 
@@ -80,7 +83,7 @@ export const docsCards = [
 ];
 
 export const changelog = [
-  ['0.3', 'Added pricing calculator with local-only persistence and tabular totals.'],
-  ['0.2', 'Split product tour, docs and changelog into static routes.'],
-  ['0.1', 'Established cobalt architectural grid and accessible release documentation.'],
+  { version: '0.3', date: '2026-09-24', title: 'Plan a release budget', body: 'Compare seat count, pipeline minutes and retention in a browser-local estimate. The line items make the rate assumptions visible; no payment or account is created.' },
+  { version: '0.2', date: '2026-09-10', title: 'Make guarded releases actionable', body: 'The sample release workflow now carries a risk explanation and an owner handoff alongside the build signals. A warning has a next action instead of becoming another anonymous red badge.' },
+  { version: '0.1', date: '2026-08-28', title: 'A shared release view', body: 'A fictional release record brings install, build and browser-smoke stages into one operating view. These notes describe the demo product, not a connected CI service.' },
 ];
