@@ -2,11 +2,11 @@
 
 ## Product-depth refinement — 2026-10-07
 
-The tour now carries distinct intake, risk and ownership evidence for the same fictional release. Pricing lists its sample rates beside the total; operator docs and dated demo product releases stay separate from implementation notes. Cobalt/carbon grid tokens and existing calculator behavior remain unchanged.
+The tour now carries distinct intake, risk and ownership evidence for the same fictional release. Pricing lists its sample rates beside the total; operator docs and dated demo product releases stay separate from implementation notes. The earlier grid treatment is historical; the current visual baseline is defined below. Calculator behavior remains unchanged.
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-07
+- Last refreshed: 2026-10-08
 - Primary product surfaces: Home, product tour, pricing calculator, docs, changelog, build reference, 404.
 - Evidence reviewed: existing What Framework starter conventions, server-rendering documentation and Vura static artifact conventions.
 
@@ -31,17 +31,17 @@ The tour now carries distinct intake, risk and ownership evidence for the same f
 - Content hierarchy: sharp value proposition, operational product tour, transparent pricing, implementation reference.
 
 ## Design principles
-- Principle 1: Architectural grid over decorative chrome.
+- Principle 1: Release evidence before decorative chrome.
 - Principle 2: Interactive controls must be genuinely useful, not ornamental.
 - Tradeoffs: static-first speed is favored over deep backend simulation; motion is restrained and reduced-motion aware.
 
 ## Visual language
 - Color: carbon navy background, electric cobalt accents, white/blue technical panels, amber warning accents for build-risk callouts.
-- Typography: narrow uppercase labels, strong geometric headings, readable sans body with tabular numerals.
-- Spacing/layout rhythm: 12-column grid, visible rule lines, dense but breathable product panels.
-- Shape/radius/elevation: crisp 14px panels, hairline borders, restrained shadows.
+- Typography: Avenir Next / Segoe UI Variable / Segoe UI / sans-serif; 16px body at 1.6 line height, 14px labels/controls, bounded 48px desktop / 32px mobile headings.
+- Spacing/layout rhythm: 8px rhythm, quiet dividers, balanced release view and readable single-column mobile flow.
+- Shape/radius/elevation: 6–8px rectangular controls/panels, subtle borders, no decorative shadows.
 - Motion: small reveal/active states, no heavy scroll choreography.
-- Imagery/iconography: CSS/SVG diagrams and grid overlays; no remote images.
+- Imagery/iconography: Source-native release timeline; no backdrop grids, gradients, remote fonts or images.
 
 ## Components
 - Existing components to reuse: What Framework client `mount`, `useSignal`, `useComputed`, `useEffect`; server `h` + `renderToString`.
